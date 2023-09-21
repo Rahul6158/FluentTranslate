@@ -39,10 +39,6 @@ def custom_sidebar():
 # Use the custom sidebar method
 page_choice = custom_sidebar()
 
-# Display the selected page
-st.write(f"You selected: {page_choice}")
-
-
 if page_choice == "Page 1":
     page1.main()  # Call the main function for Page 1
 elif page_choice == "Page 2":
