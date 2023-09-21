@@ -1,11 +1,9 @@
 import streamlit as st
-from translate import Translator
 from gtts import gTTS
 import os
 import base64
 from docx import Document  # Import the Document class from python-docx
-
-# Define the language mapping
+from googletrans import Translator
 language_mapping = {
     "en": "English",
     "es": "Spanish",
@@ -70,12 +68,9 @@ language_mapping = {
 
 # Function to translate text
 def translate_text(text, target_language):
-    if target_language in language_mapping:
-        translator = Translator(to_lang=target_language)
-        translation = translator.translate(text)
-        return translation
-    else:
-        return "Language not found in the mapping"
+    translator = Translator()
+    translation = translator.translate(text, dest=target_language)
+    return translation.text
 
 # Function to convert text to speech and save as an MP3 file
 def convert_text_to_speech(text, output_file, language='en'):
@@ -104,7 +99,7 @@ def main():
     
     # Get user input
     text = st.text_area("Enter text to translate and convert to speech:")
-    target_language = st.selectbox("Select target language:", list(language_mapping.values()))
+    target_language = st.selectbox("Select target language:", ["English"] + list(language_mapping.values()))
 
     # Check if the target language is in the mapping
     target_language_code = [code for code, lang in language_mapping.items() if lang == target_language][0]
