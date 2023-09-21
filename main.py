@@ -9,3 +9,5 @@ else:
     # Import and run the code from page2.py
     import page2
     page2.main()
+
+st.header("its the main page")
