@@ -113,7 +113,7 @@ def main():
             st.subheader(f"Translated text ({target_language}):")
             st.write(translated_text)
             
-            # Convert the translated text to speech
+            # Convert the translated text to speech and provide download links
             if st.button("Convert to Speech"):
                 output_file = "translated_speech.mp3"
                 convert_text_to_speech(translated_text, output_file, language=target_language)
@@ -122,16 +122,9 @@ def main():
                 audio_file = open(output_file, 'rb')
                 st.audio(audio_file.read(), format='audio/mp3')
 
-                # Play the generated speech (platform-dependent)
-                if os.name == 'posix':  # For Unix/Linux
-                    os.system(f"xdg-open {output_file}")
-                elif os.name == 'nt':  # For Windows
-                    os.system(f"start {output_file}")
-                else:
-                    st.warning("Unsupported operating system")
-
                 # Provide download link for the MP3 file
-                st.markdown(get_binary_file_downloader_html("Download Audio File", output_file, 'audio/mp3'), unsafe_allow_html=True)
+                audio_download_link = get_binary_file_downloader_html("Download Audio File", output_file, 'audio/mp3')
+                st.markdown(audio_download_link, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
