@@ -18,7 +18,8 @@ from PyPDF2 import PdfWriter
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from fpdf import FPDF
-   
+
+
 language_mapping = {
     "en": "English",
     "gu": "Gujarati",
@@ -241,4 +242,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
