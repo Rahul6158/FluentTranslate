@@ -1,16 +1,26 @@
 import streamlit as st
-
-# Display a bigger heading in the sidebar
-st.sidebar.markdown("<h1 style='text-align: center;'>Sidebar Navigation</h1>", unsafe_allow_html=True)
+import page1
+import page2
 
 # Create a sidebar navigation using radio buttons with increased size
-page = st.sidebar.radio("", ["Required Page", "Additional Features"], key="page")
+page_choice = st.sidebar.radio("", ["Page 1", "Page 2"], key="page")
 
-if page == "Required Page":
-    st.header("This is the Required Page")
-    # Add content for the required page here...
-elif page == "Additional Features":
-    st.header("This is the Additional Features Page")
-    # Add content for the additional features page here...
+# Add custom CSS styling to increase the size of sidebar elements
+st.markdown(
+    """
+    <style>
+    .css-17a69v6 {
+        font-size: 24px !important;
+    }
+    .st-e5 {
+        padding: 10px !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
-# Rest of your Streamlit app...
+if page_choice == "Page 1":
+    page1.main()  # Call the main function for Page 1
+elif page_choice == "Page 2":
+    page2.main()  # Call the main function for Page 2
