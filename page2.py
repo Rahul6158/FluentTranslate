@@ -125,11 +125,9 @@ def main():
         st.subheader(f"Word Count in Translated Text: {word_count} words")
 
     # Convert the translated text to speech and DOCX
-    if st.button("Convert to Speech and Download DOCX"):
+    if st.button("Convert to Speech"):
         output_file_audio = "translated_speech.mp3"
-        output_file_docx = "translated_text.docx"
         convert_text_to_speech(translated_text, output_file_audio, language=target_language_code)
-        convert_text_to_docx(translated_text, output_file_docx)
 
         # Play the generated speech
         audio_file = open(output_file_audio, 'rb')
@@ -143,8 +141,12 @@ def main():
         else:
             st.warning("Unsupported operating system")
 
-        # Provide download links for the MP3 file and DOCX document
-        st.markdown(get_binary_file_downloader_html("Download Audio File", output_file_audio, 'audio/mp3'), unsafe_allow_html=True)
+    # Convert the translated text to a DOCX document
+    if st.button("Download DOCX"):
+        output_file_docx = "translated_text.docx"
+        convert_text_to_docx(translated_text, output_file_docx)
+
+        # Provide download link for the DOCX document
         st.markdown(get_binary_file_downloader_html("Download DOCX Document", output_file_docx, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'), unsafe_allow_html=True)
 
 if __name__ == "__main__":
