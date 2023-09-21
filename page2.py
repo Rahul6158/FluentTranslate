@@ -125,32 +125,27 @@ def main():
         st.subheader(f"Word Count in Translated Text: {word_count} words")
 
         # Convert the translated text to speech
-        if st.button("Convert to Speech"):
-            output_file = "translated_speech.mp3"
-            convert_text_to_speech(translated_text, output_file, language=target_language_code)
+        if st.button("Convert to Speech and Download DOCX"):
+            output_file_audio = "translated_speech.mp3"
+            output_file_docx = "translated_text.docx"
+            convert_text_to_speech(translated_text, output_file_audio, language=target_language_code)
+            convert_text_to_docx(translated_text, output_file_docx)
 
             # Play the generated speech
-            audio_file = open(output_file, 'rb')
+            audio_file = open(output_file_audio, 'rb')
             st.audio(audio_file.read(), format='audio/mp3')
 
             # Play the generated speech (platform-dependent)
             if os.name == 'posix':  # For Unix/Linux
-                os.system(f"xdg-open {output_file}")
+                os.system(f"xdg-open {output_file_audio}")
             elif os.name == 'nt':  # For Windows
-                os.system(f"start {output_file}")
+                os.system(f"start {output_file_audio}")
             else:
                 st.warning("Unsupported operating system")
 
-            # Provide download link for the MP3 file
-            st.markdown(get_binary_file_downloader_html("Download Audio File", output_file, 'audio/mp3'), unsafe_allow_html=True)
-
-        # Convert the translated text to a DOCX document
-        if st.button("Download DOCX"):
-            docx_output_file = "translated_text.docx"
-            convert_text_to_docx(translated_text, docx_output_file)
-
-            # Provide download link for the DOCX document
-            st.markdown(get_binary_file_downloader_html("Download DOCX Document", docx_output_file, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'), unsafe_allow_html=True)
+            # Provide download links for the MP3 file and DOCX document
+            st.markdown(get_binary_file_downloader_html("Download Audio File", output_file_audio, 'audio/mp3'), unsafe_allow_html=True)
+            st.markdown(get_binary_file_downloader_html("Download DOCX Document", output_file_docx, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'), unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
