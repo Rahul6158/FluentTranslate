@@ -70,8 +70,11 @@ language_mapping = {
 # Function to translate text using Google Translate
 def translate_text(text, target_language):
     translator = Translator()
-    translated_text = translator.translate(text, dest=target_language)
-    return translated_text.text
+    try:
+        translated_text = translator.translate(text, dest=target_language)
+        return translated_text.text
+    except ValueError:
+        return "Error: Target language not found in the mapping."
 
 # Function to convert text to speech and save as an MP3 file
 def convert_text_to_speech(text, output_file, language='en'):
@@ -99,17 +102,16 @@ def main():
     
     # Get user input
     text = st.text_area("Enter text to translate and convert to speech:")
-    target_language = st.selectbox("Select target language:", list(language_mapping.values()))
+    target_language = st.selectbox("Select target language:", list(language_mapping.keys()))  # Use language codes as values
 
     # Check if the target language is in the mapping
     if st.button("Translate"):
         if target_language in language_mapping:
-            target_language_code = target_language
-            translated_text = translate_text(text, target_language_code)
+            translated_text = translate_text(text, target_language)
 
             # Display translated text
             if translated_text:
-                st.subheader(f"Translated text ({target_language}):")
+                st.subheader(f"Translated text ({language_mapping[target_language]}):")
                 st.write(translated_text)
                 
                 # Count words in the translated text
@@ -119,7 +121,7 @@ def main():
                 # Convert the translated text to speech
                 if st.button("Convert to Speech"):
                     output_file = "translated_speech.mp3"
-                    convert_text_to_speech(translated_text, output_file, language=target_language_code)
+                    convert_text_to_speech(translated_text, output_file, language=target_language)
 
                     # Play the generated speech
                     audio_file = open(output_file, 'rb')
