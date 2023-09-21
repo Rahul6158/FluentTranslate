@@ -1,16 +1,16 @@
-# main.py
-
 import streamlit as st
-st.header("Main Page")
-# Create a sidebar navigation
-page = st.sidebar.radio("Available Options", ["Required Page", "Additional Features"])
 
-if page == "Required Page":
-    # Import and run the code from page1.py
-    import page1
-    page1.main()
-else:
-    # Import and run the code from page2.py
-    import page2
-    page2.main()
+# Display a bigger heading in the sidebar
+st.sidebar.markdown("<h1 style='text-align: center;'>Available Options</h1>", unsafe_allow_html=True)
 
+# Create a sidebar navigation using radio buttons with increased size
+page = st.sidebar.radio("Select a Page", ["<h2 style='font-size: 20px;'>Documents and Pdfs Translation</h2>", "<h2 style='font-size: 20px;'>Additional Features</h2>"], format_func=lambda option: "")
+
+if page == "<h2 style='font-size: 20px;'>Required Page</h2>":
+    st.header("This is the Required Page")
+    # Add content for the required page here...
+elif page == "<h2 style='font-size: 20px;'>Additional Features</h2>":
+    st.header("This is the Additional Features Page")
+    # Add content for the additional features page here...
+
+# Rest of your Streamlit app...
