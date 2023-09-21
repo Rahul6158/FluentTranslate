@@ -69,9 +69,12 @@ language_mapping = {
 
 # Function to translate text
 def translate_text(text, target_language):
-    translator = Translator()
-    translation = translator.translate(text, dest=target_language)
-    return translation.text
+    if target_language in language_mapping:
+        translator = Translator(to_lang=target_language)
+        translation = translator.translate(text)
+        return translation
+    else:
+        return "Language not found in the mapping"
 
 # Function to convert text to speech and save as an MP3 file
 def convert_text_to_speech(text, output_file, language='en'):
@@ -80,13 +83,6 @@ def convert_text_to_speech(text, output_file, language='en'):
         tts.save(output_file)
     else:
         st.warning("No text to speak")
-
-def get_binary_file_downloader_html(link_text, file_path, file_format):
-    with open(file_path, 'rb') as f:
-        file_data = f.read()
-    b64_file = base64.b64encode(file_data).decode()
-    download_link = f'<a href="data:{file_format};base64,{b64_file}" download="{os.path.basename(file_path)}">{link_text}</a>'
-    return download_link
 
 # Function to convert text to a DOCX document
 def convert_text_to_docx(text, output_file):
@@ -115,33 +111,22 @@ def main():
     else:
         st.warning("Translation result is empty. Please check your input text.")
 
-    # Convert the translated text to speech
-    if st.button("Convert to Speech"):
-        output_file = "translated_speech.mp3"
-        convert_text_to_speech(translated_text, output_file, language=target_language_code)
+    # Create a button to perform both "Convert to Speech" and "Download DOCX" actions
+    if st.button("Translate, Convert to Speech, and Download DOCX"):
+        output_file_mp3 = "translated_speech.mp3"
+        output_file_docx = "translated_text.docx"
 
-        # Play the generated speech
-        audio_file = open(output_file, 'rb')
-        st.audio(audio_file.read(), format='audio/mp3')
-
-        # Play the generated speech (platform-dependent)
-        if os.name == 'posix':  # For Unix/Linux
-            os.system(f"xdg-open {output_file}")
-        elif os.name == 'nt':  # For Windows
-            os.system(f"start {output_file}")
-        else:
-            st.warning("Unsupported operating system")
+        # Convert the translated text to speech
+        convert_text_to_speech(translated_text, output_file_mp3, language=target_language_code)
 
         # Provide download link for the MP3 file
-        st.markdown(get_binary_file_downloader_html("Download Audio File", output_file, 'audio/mp3'), unsafe_allow_html=True)
+        st.audio(output_file_mp3, format='audio/mp3', key='audio')
 
-    # Convert the translated text to a DOCX document
-    if st.button("Download DOCX"):
-        docx_output_file = "translated_text.docx"
-        convert_text_to_docx(translated_text, docx_output_file)
+        # Convert the translated text to a DOCX document
+        convert_text_to_docx(translated_text, output_file_docx)
 
         # Provide download link for the DOCX document
-        st.markdown(get_binary_file_downloader_html("Download DOCX Document", docx_output_file, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'), unsafe_allow_html=True)
+        st.markdown(get_binary_file_downloader_html("Download DOCX Document", output_file_docx, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'), unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
