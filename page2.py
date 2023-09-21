@@ -103,7 +103,7 @@ def main():
     st.title("Text Translation and Conversion to Speech (English - other languages)")
     
     # Get user input
-    text = st.text_area("Enter text to translate and convert to speech:")
+    text = st.text_area("Enter text to translate and convert to speech:", height = 300)
     target_language = st.selectbox("Select target language:", list(language_mapping.values()))
 
     # Add a button to trigger the translation and text-to-speech conversion
