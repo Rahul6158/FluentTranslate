@@ -36,7 +36,7 @@ def custom_sidebar():
 # Use the custom sidebar method
 page_choice = custom_sidebar()
 
-if page_choice == "Page 1":
+if page_choice == "Document and Pdf Translation":
     page1.main()  # Call the main function for Page 1
-elif page_choice == "Page 2":
+elif page_choice == "Text Translation":
     page2.main()  # Call the main function for Page 2
