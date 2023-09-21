@@ -3,9 +3,9 @@
 import streamlit as st
 
 # Create a sidebar navigation
-page = st.sidebar.selectbox("Select a Page", ["Page 1", "Page 2"])
+page = st.sidebar.selectbox("Select a Page", ["Required Page", "Additional Features"])
 
-if page == "Page 1":
+if page == "Required Page":
     # Import and run the code from page1.py
     import page1
     page1.main()
