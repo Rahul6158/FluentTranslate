@@ -1,9 +1,9 @@
 import streamlit as st
-from googletrans import Translator  # Use the googletrans library for translation
+from googletrans import Translator
 from gtts import gTTS
 import os
 import base64
-from docx import Document  # Import the Document class from python-docx
+from docx import Document
 
 language_mapping = {
     "en": "English",
@@ -79,15 +79,10 @@ def translate_text(text, target_language):
 # Function to convert text to speech and save as an MP3 file
 def convert_text_to_speech(text, output_file, language='en'):
     if text:
-        tts = gTTS(text=text, lang=language)
+        tts = gTTS(text=text, lang=language, slow=False)  # Set slow=False for faster speech
         tts.save(output_file)
     else:
         st.warning("No text to speak")
-
-# Function to count words in text
-def count_words(text):
-    words = text.split()
-    return len(words)
 
 def get_binary_file_downloader_html(link_text, file_path, file_format):
     with open(file_path, 'rb') as f:
@@ -102,43 +97,41 @@ def main():
     
     # Get user input
     text = st.text_area("Enter text to translate and convert to speech:")
-    target_language = st.selectbox("Select target language:", list(language_mapping.keys()))  # Use language codes as values
+    target_language = st.selectbox("Select target language:", list(language_mapping.values()))
 
     # Check if the target language is in the mapping
     if st.button("Translate"):
-        if target_language in language_mapping:
-            translated_text = translate_text(text, target_language)
-
-            # Display translated text
-            if translated_text:
-                st.subheader(f"Translated text ({language_mapping[target_language]}):")
-                st.write(translated_text)
-                
-                # Count words in the translated text
-                word_count = count_words(translated_text)
-                st.subheader(f"Word Count in Translated Text: {word_count} words")
-
-                # Convert the translated text to speech
-                if st.button("Convert to Speech"):
-                    output_file = "translated_speech.mp3"
-                    convert_text_to_speech(translated_text, output_file, language=target_language)
-
-                    # Play the generated speech
-                    audio_file = open(output_file, 'rb')
-                    st.audio(audio_file.read(), format='audio/mp3')
-
-                    # Play the generated speech (platform-dependent)
-                    if os.name == 'posix':  # For Unix/Linux
-                        os.system(f"xdg-open {output_file}")
-                    elif os.name == 'nt':  # For Windows
-                        os.system(f"start {output_file}")
-                    else:
-                        st.warning("Unsupported operating system")
-
-                    # Provide download link for the MP3 file
-                    st.markdown(get_binary_file_downloader_html("Download Audio File", output_file, 'audio/mp3'), unsafe_allow_html=True)
+        for code, lang_name in language_mapping.items():
+            if target_language == lang_name:
+                translated_text = translate_text(text, code)
+                break
         else:
             st.warning("Target language not found in the mapping.")
+
+        # Display translated text
+        if translated_text:
+            st.subheader(f"Translated text ({target_language}):")
+            st.write(translated_text)
+            
+            # Convert the translated text to speech
+            if st.button("Convert to Speech"):
+                output_file = "translated_speech.mp3"
+                convert_text_to_speech(translated_text, output_file, language=target_language)
+
+                # Play the generated speech
+                audio_file = open(output_file, 'rb')
+                st.audio(audio_file.read(), format='audio/mp3')
+
+                # Play the generated speech (platform-dependent)
+                if os.name == 'posix':  # For Unix/Linux
+                    os.system(f"xdg-open {output_file}")
+                elif os.name == 'nt':  # For Windows
+                    os.system(f"start {output_file}")
+                else:
+                    st.warning("Unsupported operating system")
+
+                # Provide download link for the MP3 file
+                st.markdown(get_binary_file_downloader_html("Download Audio File", output_file, 'audio/mp3'), unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
