@@ -99,50 +99,49 @@ def main():
     st.title("Text Translation and Conversion to speech (English - other languages)")
     
     # Get user input
-    text = st.text_area("Enter text to translate and convert to speech:", height = 300)
-    target_language = st.selectbox("Select target language:", ["English"] + list(language_mapping.values()))
+    text = st.text_area("Enter text to translate and convert to speech:")
+    target_language = st.selectbox("Select target language:", list(language_mapping.values()))
 
     # Check if the target language is in the mapping
     target_language_code = [code for code, lang in language_mapping.items() if lang == target_language][0]
 
-    # Translate the input text when the "Translate" button is clicked
-    if st.button("Translate"):
-        translated_text = translate_text(text, target_language_code)
+    # Translate the input text
+    translated_text = translate_text(text, target_language_code)
 
-        # Display translated text
-        if translated_text:
-            st.subheader(f"Translated text ({target_language}):")
-            st.write(translated_text)
+    # Display translated text
+    if translated_text:
+        st.subheader(f"Translated text ({target_language}):")
+        st.write(translated_text)
+    else:
+        st.warning("Translation result is empty. Please check your input text.")
+
+    # Convert the translated text to speech
+    if st.button("Convert to Speech"):
+        output_file = "translated_speech.mp3"
+        convert_text_to_speech(translated_text, output_file, language=target_language_code)
+
+        # Play the generated speech
+        audio_file = open(output_file, 'rb')
+        st.audio(audio_file.read(), format='audio/mp3')
+
+        # Play the generated speech (platform-dependent)
+        if os.name == 'posix':  # For Unix/Linux
+            os.system(f"xdg-open {output_file}")
+        elif os.name == 'nt':  # For Windows
+            os.system(f"start {output_file}")
         else:
-            st.warning("Translation result is empty. Please check your input text.")
+            st.warning("Unsupported operating system")
 
-        # Convert the translated text to speech
-        if st.button("Convert to Speech"):
-            output_file = "translated_speech.mp3"
-            convert_text_to_speech(translated_text, output_file, language=target_language_code)
+        # Provide download link for the MP3 file
+        st.markdown(get_binary_file_downloader_html("Download Audio File", output_file, 'audio/mp3'), unsafe_allow_html=True)
 
-            # Play the generated speech
-            audio_file = open(output_file, 'rb')
-            st.audio(audio_file.read(), format='audio/mp3')
+    # Convert the translated text to a DOCX document
+    if st.button("Download DOCX"):
+        docx_output_file = "translated_text.docx"
+        convert_text_to_docx(translated_text, docx_output_file)
 
-            # Play the generated speech (platform-dependent)
-            if os.name == 'posix':  # For Unix/Linux
-                os.system(f"xdg-open {output_file}")
-            elif os.name == 'nt':  # For Windows
-                os.system(f"start {output_file}")
-            else:
-                st.warning("Unsupported operating system")
-
-            # Provide download link for the MP3 file
-            st.markdown(get_binary_file_downloader_html("Download Audio File", output_file, 'audio/mp3'), unsafe_allow_html=True)
-
-        # Convert the translated text to a DOCX document
-        if st.button("Download DOCX"):
-            docx_output_file = "translated_text.docx"
-            convert_text_to_docx(translated_text, docx_output_file)
-
-            # Provide download link for the DOCX document
-            st.markdown(get_binary_file_downloader_html("Download DOCX Document", docx_output_file, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'), unsafe_allow_html=True)
+        # Provide download link for the DOCX document
+        st.markdown(get_binary_file_downloader_html("Download DOCX Document", docx_output_file, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'), unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
