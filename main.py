@@ -1,10 +1,7 @@
 import streamlit as st
 import page1
 import page2
-
-import streamlit as st
-
-# Define a custom sidebar method with styled radio buttons
+# Define a custom sidebar methd with styled radio buttons
 def custom_sidebar():
     st.sidebar.title("Available Options")  # Add a sidebar title
 
