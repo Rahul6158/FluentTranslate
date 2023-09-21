@@ -1,3 +1,7 @@
+# main.py
+
+import streamlit as st
+
 # Create a sidebar navigation
 page = st.sidebar.selectbox("Select a Page", ["Page 1", "Page 2"])
 
@@ -10,4 +14,3 @@ else:
     import page2
     page2.main()
 
-st.header("its the main page")
