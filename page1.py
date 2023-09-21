@@ -145,7 +145,7 @@ def count_words(text):
     return len(words)
 
 def main():
-    st.image("jangirii.jpg", width=690)
+    st.image("jangirii.jpg", width=None, height=None)
     st.title("Text Translation and Conversion to Speech (English - other languages)")
 
     # Add a file uploader for DOCX, PDF, images, and TXT
