@@ -6,7 +6,7 @@ import streamlit as st
 
 # Define a custom sidebar method with styled radio buttons
 def custom_sidebar():
-    st.sidebar.title("Sidebar Title")  # Add a sidebar title
+    st.sidebar.title("Available Options")  # Add a sidebar title
 
     # Increase font size and style radio buttons
     st.sidebar.markdown("""
@@ -32,7 +32,7 @@ def custom_sidebar():
     """, unsafe_allow_html=True)
 
     # Create radio button group
-    page_choice = st.sidebar.radio("Select a Page", ["Page 1", "Page 2"])
+    page_choice = st.sidebar.radio("Select a Page", ["Document and Pdf Translation", "Text Translation"])
 
     return page_choice
 
