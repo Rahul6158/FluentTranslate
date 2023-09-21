@@ -99,7 +99,7 @@ def convert_text_to_word_doc(text, output_file):
     doc.save(output_file)
 
 def main():
-    st.image("jangirii.png", width=50)
+    st.image("jangirii.png", width=300)
     st.title("Text Translation and Conversion to Speech (English - other languages)")
     
     # Get user input
