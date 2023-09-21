@@ -98,7 +98,7 @@ def main():
     st.title("Text Translation and Conversion to speech (English - other languages)")
     
     # Get user input
-    text = st.text_area("Enter text to translate and convert to speech:")
+    text = st.text_area("Enter text to translate and convert to speech:", height = 500)
     target_language = st.selectbox("Select target language:", ["English"] + list(language_mapping.values()))
 
     # Check if the target language is in the mapping
