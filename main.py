@@ -1,9 +1,9 @@
 # main.py
 
 import streamlit as st
-
+st.header("Main Page")
 # Create a sidebar navigation
-page = st.sidebar("Available Pages", ["Required Page", "Additional Features"])
+page = st.sidebar.radio("Available Options", ["Required Page", "Additional Features"])
 
 if page == "Required Page":
     # Import and run the code from page1.py
