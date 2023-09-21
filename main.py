@@ -29,7 +29,7 @@ def custom_sidebar():
     """, unsafe_allow_html=True)
 
     # Create radio button group
-    page_choice = st.sidebar.radio("Select a Page", ["Document and Pdf Translation", "Text Translation"])
+    page_choice = st.sidebar.radio("Choose What You Want To Do", ["Document and Pdf Translation", "Text Translation"])
 
     return page_choice
 
