@@ -94,6 +94,7 @@ def translate_text_with_google(text, target_language):
 
     return translated_text
 
+
 # Function to convert text to speech and save as an MP3 file
 def convert_text_to_speech(text, output_file, language='en'):
     if text:
