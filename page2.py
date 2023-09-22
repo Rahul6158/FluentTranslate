@@ -1,5 +1,5 @@
 import streamlit as st
-from googletrans import Translator
+from googletrans import Translator as GoogleTranslator
 from gtts import gTTS
 import os
 import base64
