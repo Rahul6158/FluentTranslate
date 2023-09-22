@@ -103,8 +103,12 @@ def convert_text_to_speech(text, output_file, language='en'):
             st.warning(f"Unsupported language: {language}")
             return
 
-        tts = gTTS(text=text, lang=language)
-        tts.save(output_file)
+         try:
+            tts = gTTS(text=text, lang=language)
+            tts.save(output_file)
+         except Exception as e:
+            st.error(f"Error with gTTS: {str(e)}")
+        
 
 # Function to generate a download link for a file
 def get_binary_file_downloader_html(link_text, file_path, file_format):
