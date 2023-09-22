@@ -10,6 +10,7 @@ from PIL import Image
 from PyPDF2 import PdfFileReader
 from bs4 import BeautifulSoup
 import tempfile
+import time
 
 language_mapping = {
     "en": "English",
@@ -109,6 +110,24 @@ def convert_text_to_word_doc(text, output_file):
     doc = Document()
     doc.add_paragraph(text)
     doc.save(output_file)
+
+# Function to translate text using Google Translate with rate limiting
+def translate_text_with_google(text, target_language):
+    google_translator = GoogleTranslator()
+
+    max_chunk_length = 500
+    translated_text = ""
+
+    for i in range(0, len(text), max_chunk_length):
+        chunk = text[i:i + max_chunk_length]
+
+        # Add rate limiting to avoid sending requests too quickly
+        time.sleep(1)  # Sleep for 1 second between requests
+
+        translated_chunk = google_translator.translate(chunk, dest=target_language).text
+        translated_text += translated_chunk
+
+    return translated_text
 
 # Function to count words in the text
 def count_words(text):
