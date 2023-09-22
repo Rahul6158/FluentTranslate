@@ -119,18 +119,16 @@ def convert_text_to_word_doc(text, output_file):
     doc.add_paragraph(text)
     doc.save(output_file)
 
-# Function to translate text with fallback to Google Translate on error
 def translate_text_with_fallback(text, target_language):
     try:
-        translated_text = translate_text_with_google(text, target_language)
-        # Check if the translation result is None, and use a default message
-        if translated_text is None:
-            st.warning("Translation result is empty. Please check your input text.")
-            return "Translation not available"
-        return translated_text
+        if target_language in language_mapping:
+            translator = Translator(to_lang=target_language)
+            translation = translator.translate(text)
+            return translation
+        else:
+            return "Language not found in the mapping"
     except Exception as e:
-        st.warning(f"Google Translate error: {str(e)}")
-        return "Translation not available"
+        return f"Translation error: {str(e)}"
 
 
 # Function to convert translated text to a Word document
