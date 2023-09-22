@@ -65,7 +65,7 @@ def generate_summary(text, num_sentences=3):
     return " ".join(top_sentences)
 
 def main():
-    st.title("Text Summarization without Transformers")
+    st.title("Text Summarization")
 
     text = st.text_area("Enter your text here:", height = 400)
 
@@ -77,5 +77,5 @@ def main():
         else:
             st.warning("Please enter some text for summarization.")
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     main()
