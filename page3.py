@@ -67,7 +67,7 @@ def generate_summary(text, num_sentences=3):
 def main():
     st.title("Text Summarization")
 
-    text = st.text_area("Enter your text here:", height = 400)
+    text = st.text_area("Enter your text here:", height=400)
 
     if st.button("Summarize"):
         if text:
@@ -77,7 +77,5 @@ def main():
         else:
             st.warning("Please enter some text for summarization.")
 
-    if __name__ == "__main__"
-        main()
-
-
+if __name__ == "__main__":
+    main()
