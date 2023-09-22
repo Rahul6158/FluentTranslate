@@ -107,6 +107,10 @@ def translate_text_with_fallback(text, target_language):
     except Exception as e:
         st.warning(f"Google Translate error: {str(e)}")
 
+# Function to count words in the text
+def count_words(text):
+    words = text.split()
+    return len(words)
 
 def main():
     st.image("jangirii.png", width=200)
