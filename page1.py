@@ -218,25 +218,26 @@ def main():
 
         if text is not None:
             st.subheader("Text Extracted from Uploaded File:")
-            st.write(text)
-
-            # Count words in the text
-            word_count = count_words(text)
+            # Make the extracted text editable
+            edited_text = st.text_area("Edit the extracted text:", text)
+            
+            # Count words in the edited text
+            word_count = count_words(edited_text)
             st.subheader(f"Word Count: {word_count} words")
 
             # Check if word count exceeds 5000
-            if word_count > 15000:
+            if word_count > 5000:
                 st.warning("Warning: The document contains more than 5000 words, which may be too large for translation.")
                 return  # Exit the function if word count exceeds 5000
 
-            st.subheader('Select Language to Translate : ')
+            st.subheader('Select Language to Translate:')
             target_language = st.selectbox("Select target language:", list(language_mapping.values()))
 
-            # Check if text is not empty or None before attempting translation
-            if text and len(text.strip()) > 0:
-                # Translate the extracted text
+            # Check if edited_text is not empty or None before attempting translation
+            if edited_text and len(edited_text.strip()) > 0:
+                # Translate the edited text
                 try:
-                    translated_text = translate_text_with_fallback(text, target_language)
+                    translated_text = translate_text_with_fallback(edited_text, target_language)
                 except Exception as e:
                     st.error(f"Translation error: {str(e)}")
                     translated_text = None
@@ -250,8 +251,8 @@ def main():
             else:
                 st.warning("Translation result is empty. Please check your input text.")
 
-            # Convert the translated text to speech and generate download links
-            if st.button("Convert to Speech and get Translated document") and translated_text:
+            # Button to convert to speech and get download links
+            if st.button("Convert to Speech and Get Download Links") and translated_text:
                 # Get the target language code from language_mapping
                 target_language_code = [code for code, lang in language_mapping.items() if lang == target_language][0]
 
@@ -269,14 +270,6 @@ def main():
                 # Play the generated speech
                 audio_file = open(output_file, 'rb')
                 st.audio(audio_file.read(), format='audio/mp3')
-
-                # Play the generated speech (platform-dependent)
-                if os.name == 'posix':  # For Unix/Linux
-                    os.system(f"xdg-open {output_file}")
-                elif os.name == 'nt':  # For Windows
-                    os.system(f"start {output_file}")
-                else:
-                    st.warning("Unsupported operating system")
 
                 # Provide a download link for the MP3 file
                 st.markdown(get_binary_file_downloader_html("Download Audio File", output_file, 'audio/mp3'), unsafe_allow_html=True)
