@@ -38,7 +38,3 @@ page_choice = custom_sidebar()
 
 if page_choice == "Document and Pdf Translation":
     page1.main()  # Call the main function for Page 1
-elif page_choice == "Text Translation":
-    page2.main()  # Call the main function for Page 2
-elif page_choice == "Text Summarization":
-    page2.main()  # Call the main function for Page 2
