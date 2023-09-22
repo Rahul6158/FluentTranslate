@@ -77,6 +77,6 @@ def main():
         else:
             st.warning("Please enter some text for summarization.")
 
-    if __name__ = "__main__"
+    if __name__ == "__main__"
         main()
 
