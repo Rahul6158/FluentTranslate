@@ -1,24 +1,15 @@
 import streamlit as st
 import os
 import base64
-import docx2txt
 from googletrans import Translator as GoogleTranslator
 from gtts import gTTS
 import io
 from docx import Document
-from bs4 import BeautifulSoup
-from PIL import Image
 import pytesseract
-import easyocr
-import PyPDF2
 from PIL import Image
-from PyPDF2 import PdfFileWriter, PdfFileReader
+from PyPDF2 import PdfFileReader
+from bs4 import BeautifulSoup
 import tempfile
-from PyPDF2 import PdfWriter
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from fpdf import FPDF
-
 
 language_mapping = {
     "en": "English",
@@ -30,7 +21,6 @@ language_mapping = {
     "bn": "Bengali",
 }
 
-
 # Function to extract text from a DOCX file
 def process_docx_text(docx_file, skip_lists=True):
     # Extract text from the DOCX file
@@ -38,7 +28,8 @@ def process_docx_text(docx_file, skip_lists=True):
         # Use custom function to remove lists
         text = process_docx_text_without_lists(docx_file)
     else:
-        text = docx2txt.process(docx_file)
+        doc = Document(docx_file)
+        text = " ".join([paragraph.text for paragraph in doc.paragraphs])
     return text
 
 # Function to extract text from an uploaded image using Pytesseract
@@ -56,7 +47,7 @@ def process_docx_text_without_lists(docx_file):
     doc = Document(docx_file)
     text = ""
     for paragraph in doc.paragraphs:
-        if not paragraph.style.name.startswith('•'):
+        if not paragraph.style.name.startswith('List'):
             text += paragraph.text + '\n'
     return text
 
@@ -65,11 +56,11 @@ def process_pdf_text_without_lists(pdf_file):
     pdf_text = ""
     try:
         with st.spinner("Extracting text from PDF..."):
-            pdf_reader = PyPDF2.PdfReader(pdf_file)
-            num_pages = len(pdf_reader.pages)
+            pdf_reader = PdfFileReader(pdf_file)
+            num_pages = pdf_reader.getNumPages()
             for page_number in range(num_pages):
-                page = pdf_reader.pages[page_number]
-                pdf_text += page.extract_text()
+                page = pdf_reader.getPage(page_number)
+                pdf_text += page.extractText()
     except Exception as e:
         st.error(f"Error processing PDF: {str(e)}")
     return pdf_text
@@ -114,24 +105,6 @@ def get_binary_file_downloader_html(link_text, file_path, file_format):
     return download_link
 
 # Function to convert text to a Word document
-def convert_text_to_word_doc(text, output_file):
-    doc = Document()
-    doc.add_paragraph(text)
-    doc.save(output_file)
-
-def translate_text_with_fallback(text, target_language):
-    try:
-        if target_language in language_mapping:
-            translator = Translator(to_lang=target_language)
-            translation = translator.translate(text)
-            return translation
-        else:
-            return "Language not found in the mapping"
-    except Exception as e:
-        return f"Translation error: {str(e)}"
-
-
-# Function to convert translated text to a Word document
 def convert_text_to_word_doc(text, output_file):
     doc = Document()
     doc.add_paragraph(text)
@@ -203,7 +176,7 @@ def main():
                     target_language_code = [code for code, lang in language_mapping.items() if lang == target_language][0]
 
                     # Translate edited text using Google Translate with error handling
-                    translated_text = translate_text_with_fallback(edited_text, target_language_code)
+                    translated_text = translate_text_with_google(edited_text, target_language_code)
 
                     # Display translated text
                     if translated_text:
