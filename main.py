@@ -5,9 +5,8 @@ import page3
 
 
 def custom_sidebar():
-    st.write("Features")
+    st.sidebar.header("Features")  
     st.sidebar.title("Available Options")  # Add a sidebar title
-
     # Create radio button group
     page_choice = st.sidebar.radio("", ["Document and Pdf Translation", "Text Translation", "Text Summarization"])
 
