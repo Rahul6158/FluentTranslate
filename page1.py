@@ -1,28 +1,27 @@
 import streamlit as st
-from googletrans import Translator as GoogleTranslator
+from translate import Translator
 from gtts import gTTS
 import os
 import base64
 
-# Define the language mapping
 language_mapping = {
     "en": "English",
-    "es": "Spanish",
-    "fr": "French",
-    # Add more languages as needed
+    "gu": "Gujarati",
+    "ta": "Tamil",
+    "te": "Telugu",
+    "kn": "Kannada",
+    "mr": "Marathi",
+    "bn": "Bengali",
 }
 
-# Function to translate text using Google Translate with error handling
-def translate_text_with_fallback(text, target_language):
-    try:
-        if target_language in language_mapping:
-            translator = GoogleTranslator()
-            translation = translator.translate(text, dest=target_language).text
-            return translation
-        else:
-            return "Language not found in the mapping"
-    except Exception as e:
-        return f"Translation error: {str(e)}"
+# Function to translate text using the "translate" library
+def translate_text(text, target_language):
+    if target_language in language_mapping:
+        translator = Translator(to_lang=target_language)
+        translation = translator.translate(text)
+        return translation
+    else:
+        return "Language not found in the mapping"
 
 # Rest of your code remains the same
 
@@ -38,7 +37,7 @@ def main():
     target_language_code = [code for code, lang in language_mapping.items() if lang == target_language][0]
 
     # Translate the input text
-    translated_text = translate_text_with_fallback(text, target_language_code)
+    translated_text = translate_text(text, target_language_code)
 
     # Display translated text
     if translated_text:
