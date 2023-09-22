@@ -114,10 +114,15 @@ def count_words(text):
 
 def main():
     st.image("jangirii.png", width=200)
-    st.title("Text Translation and Conversion to Speech (English - other languages)")
+    st.title("Text Translation and Conversion to Speech (MultiLingual)")
     
     # Get user input
-    text = st.text_area("Enter text to translate and convert to speech:", height = 300)
+    text = st.text_area("Enter text to translate and convert to speech:", height=300)
+
+    # Show word count as soon as the text is entered
+    word_count = count_words(text)
+    st.write(f"Word Count: {word_count} words")
+
     target_language = st.selectbox("Select target language:", list(language_mapping.values()))
 
     # Add a button to trigger the translation and text-to-speech conversion
