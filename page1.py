@@ -63,23 +63,16 @@ def process_pdf_text_without_lists(pdf_file):
         st.error(f"Error processing PDF: {str(e)}")
     return pdf_text
 
+from googletrans import Translator as GoogleTranslator
+
 def translate_text_with_google(text, target_language):
     try:
-        google_translator = GoogleTranslator(service_urls=['translate.google.com'])
-
-        max_chunk_length = 500
-        translated_text = ""
-
-        for i in range(0, len(text), max_chunk_length):
-            chunk = text[i:i + max_chunk_length]
-            translated_chunk = google_translator.translate(chunk, dest=target_language).text
-            translated_text += translated_chunk
-
+        google_translator = GoogleTranslator()
+        translated_text = google_translator.translate(text, dest=target_language).text
         return translated_text
     except Exception as e:
         print(f"Translation error: {str(e)}")
         return None
-
 
 # Function to convert text to speech and save as an MP3 file
 def convert_text_to_speech(text, output_file, language='en'):
