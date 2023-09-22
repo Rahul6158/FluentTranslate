@@ -7,13 +7,18 @@ from docx import Document
 
 language_mapping = {
     "en": "English",
+    "hi": "Hindi",
+    "gu": "Gujarati",
+    "mr": "Marathi",
+    "ta": "Tamil",
+    "te": "Telugu",
+    "ur": "Urdu",
     "es": "Spanish",
     "fr": "French",
     "de": "German",
     "it": "Italian",
     "pt": "Portuguese",
     "nl": "Dutch",
-    "hi": "Hindi",
     "ja": "Japanese",
     "ko": "Korean",
     "zh-cn": "Simplified Chinese",
@@ -51,20 +56,10 @@ language_mapping = {
     "mk": "Macedonian",
     "hy": "Armenian",
     "ka": "Georgian",
-    "mt": "Maltese",
-    "mr": "Marathi",
-    "ta": "Tamil",
-    "te": "Telugu",
-    "ur": "Urdu",
     "ne": "Nepali",
     "si": "Sinhala",
     "km": "Khmer",
-    "lo": "Lao",
-    "my": "Burmese",
-    "jw": "Javanese",
-    "mn": "Mongolian",
-    "zu": "Zulu",
-    "xh": "Xhosa"
+    "jw": "Javanese"
 }
 
 # Function to translate text using Google Translate with error handling
