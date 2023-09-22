@@ -127,6 +127,19 @@ def convert_text_to_word_doc(text, output_file):
     doc.add_paragraph(text)
     doc.save(output_file)
 
+# Function to translate text with fallback to Google Translate on error
+def translate_text_with_fallback(text, target_language):
+    try:
+        translated_text = translate_text_with_google(text, target_language)
+        # Check if the translation result is None, and use a default message
+        if translated_text is None:
+            st.warning("Translation result is empty. Please check your input text.")
+            return "Translation not available"
+        return translated_text
+    except Exception as e:
+        st.warning(f"Google Translate error: {str(e)}")
+        return "Translation not available"
+
 # Function to count words in the text
 def count_words(text):
     words = text.split()
