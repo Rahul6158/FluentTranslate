@@ -174,9 +174,9 @@ def main():
             st.subheader(f"Word Count: {word_count} words")
 
             # Check if word count exceeds 5000
-            if word_count > 5000:
-                st.warning("Warning: The document contains more than 5000 words, which may be too large for translation.")
-                return  # Exit the function if word count exceeds 5000
+            if word_count > 50000:
+                st.warning("Warning: The document contains more than 50000 words, which may be too large for translation.")
+                return  # Exit the function if word count exceeds 50000
 
             st.subheader('Select Language to Translate:')
             target_language = st.selectbox("Select target language:", list(language_mapping.values()))
