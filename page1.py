@@ -6,19 +6,9 @@ from googletrans import Translator as GoogleTranslator
 from gtts import gTTS
 import io
 from docx import Document
-from bs4 import BeautifulSoup
 from PIL import Image
 import pytesseract
-import easyocr
 import PyPDF2
-from PIL import Image
-from PyPDF2 import PdfFileWriter, PdfFileReader
-import tempfile
-from PyPDF2 import PdfWriter
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from fpdf import FPDF
-
 
 language_mapping = {
     "en": "English",
@@ -29,7 +19,6 @@ language_mapping = {
     "mr": "Marathi",
     "bn": "Bengali",
 }
-
 
 # Function to extract text from a DOCX file
 def process_docx_text(docx_file, skip_lists=True):
@@ -74,12 +63,6 @@ def process_pdf_text_without_lists(pdf_file):
         st.error(f"Error processing PDF: {str(e)}")
     return pdf_text
 
-# Function to extract text from a TXT file
-def process_txt_file(txt_file):
-    txt_text = txt_file.read()
-    text = txt_text.decode('utf-8')
-    return text
-
 # Function to translate text using Google Translate
 def translate_text_with_google(text, target_language):
     google_translator = GoogleTranslator()
@@ -94,7 +77,6 @@ def translate_text_with_google(text, target_language):
 
     return translated_text
 
-
 # Function to convert text to speech and save as an MP3 file
 def convert_text_to_speech(text, output_file, language='en'):
     if text:
@@ -103,12 +85,11 @@ def convert_text_to_speech(text, output_file, language='en'):
             st.warning(f"Unsupported language: {language}")
             return
 
-         try:
+        try:
             tts = gTTS(text=text, lang=language)
             tts.save(output_file)
-         except Exception as e:
+        except Exception as e:
             st.error(f"Error with gTTS: {str(e)}")
-        
 
 # Function to generate a download link for a file
 def get_binary_file_downloader_html(link_text, file_path, file_format):
@@ -118,27 +99,11 @@ def get_binary_file_downloader_html(link_text, file_path, file_format):
     download_link = f'<a href="data:{file_format};base64,{b64_file}" download="{os.path.basename(file_path)}">{link_text}</a>'
     return download_link
 
-# Function to convert text to a Word document
-def convert_text_to_word_doc(text, output_file):
-    doc = Document()
-    doc.add_paragraph(text)
-    doc.save(output_file)
-
-
-# Function to convert translated text to a Word document
-def convert_text_to_word_doc(text, output_file):
-    doc = Document()
-    doc.add_paragraph(text)
-    doc.save(output_file)
-
 # Function to translate text with fallback to Google Translate on error
 def translate_text_with_fallback(text, target_language):
     try:
-        translated_text = translate_text_with_google(text, target_language)
-        # Check if the translation result is None, and use a default message
-        if translated_text is None:
-            st.warning("Translation result is empty. Please check your input text.")
-            return "Translation not available"
+        google_translator = GoogleTranslator()
+        translated_text = google_translator.translate(text, dest=target_language).text
         return translated_text
     except Exception as e:
         st.warning(f"Google Translate error: {str(e)}")
@@ -186,16 +151,16 @@ def main():
 
         if text is not None:
             st.subheader("Text Extracted from Uploaded File:")
-            
+
             # Display the text in a text area for editing
             edited_text = st.text_area("Edit the extracted text", value=text, height=400)
-    
+
             # Count words in the edited text
             word_count = count_words(edited_text)
             st.subheader(f"Word Count: {word_count} words")
 
             # Check if word count exceeds 5000
-            if word_count > 40000:
+            if word_count > 5000:
                 st.warning("Warning: The document contains more than 5000 words, which may be too large for translation.")
                 return  # Exit the function if word count exceeds 5000
 
@@ -238,13 +203,6 @@ def main():
 
                         # Provide a download link for the MP3 file
                         st.markdown(get_binary_file_downloader_html("Download Audio File", output_file, 'audio/mp3'), unsafe_allow_html=True)
-
-                        # Convert the translated text to a DOCX document
-                        docx_output_file = "translated_text.docx"
-                        convert_text_to_word_doc(translated_text, docx_output_file)
-
-                        # Provide a download link for the DOCX document
-                        st.markdown(get_binary_file_downloader_html("Download DOCX Document", docx_output_file, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'), unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
