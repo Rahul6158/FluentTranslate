@@ -128,6 +128,22 @@ def count_words(text):
     words = text.split()
     return len(words)
 
+import streamlit as st
+from PIL import Image
+import os
+from translation_functions import (
+    process_docx_text_without_lists,
+    process_pdf_text_without_lists,
+    extract_text_from_uploaded_image,
+    count_words,
+    translate_text_with_fallback,
+    translate_text_with_google,
+    convert_text_to_speech,
+    convert_text_to_word_doc,
+    get_binary_file_downloader_html,
+    language_mapping,
+)
+
 # Main Streamlit app
 def main():
     st.image("jangirii.png", width=300)
@@ -167,14 +183,14 @@ def main():
         if text is not None:
             st.subheader("Text Extracted from Uploaded File:")
             # Make the extracted text editable
-            edited_text = st.text_area("Edit the extracted text:", text, height = 400)
+            edited_text = st.text_area("Edit the extracted text:", text, height=400)
             
             # Count words in the edited text
             word_count = count_words(edited_text)
             st.subheader(f"Word Count: {word_count} words")
 
             # Check if word count exceeds 5000
-            if word_count > 50000:
+            if word_count > 5000:
                 st.warning("Warning: The document contains more than 5000 words, which may be too large for translation.")
                 return  # Exit the function if word count exceeds 5000
 
@@ -199,8 +215,8 @@ def main():
             else:
                 st.warning("Translation result is empty. Please check your input text.")
 
-            # Button to convert to speech and get download links
-            if st.button("Convert to Speech and Get Download Links") and translated_text:
+            # Button to convert to audio and get download links
+            if st.button("Convert to Audio and Get Download Links") and translated_text:
                 # Get the target language code from language_mapping
                 target_language_code = [code for code, lang in language_mapping.items() if lang == target_language][0]
 
@@ -231,3 +247,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
