@@ -129,7 +129,6 @@ def count_words(text):
     words = text.split()
     return len(words)
 
-# Main Streamlit app
 def main():
     st.image("jangirii.png", width=300)
     st.title("Text Translation and Conversion to Speech (English - other languages)")
@@ -174,34 +173,34 @@ def main():
             word_count = count_words(edited_text)
             st.subheader(f"Word Count: {word_count} words")
 
-            # Check if word count exceeds 50000
-            if word_count > 50000:
-                st.warning("Warning: The document contains more than 50000 words, which may be too large for translation.")
+            # Check if word count exceeds 5000
+            if word_count > 5000:
+                st.warning("Warning: The document contains more than 5000 words, which may be too large for translation.")
                 return  # Exit the function if word count exceeds 5000
 
             st.subheader('Select Language to Translate:')
             target_language = st.selectbox("Select target language:", list(language_mapping.values()))
 
-            # Check if edited_text is not empty or None before attempting translation
-            if edited_text and len(edited_text.strip()) > 0:
-                # Translate the edited text
-                try:
-                    translated_text = translate_text_with_fallback(edited_text, target_language)
-                except Exception as e:
-                    st.error(f"Translation error: {str(e)}")
-                    translated_text = None
-            else:
-                st.warning("Input text is empty. Please check your document.")
+            # Button to translate and generate audio and download links
+            if st.button("Translate and Generate Audio/Download Links"):
+                # Check if edited_text is not empty or None before attempting translation
+                if edited_text and len(edited_text.strip()) > 0:
+                    # Translate the edited text
+                    try:
+                        translated_text = translate_text_with_fallback(edited_text, target_language)
+                    except Exception as e:
+                        st.error(f"Translation error: {str(e)}")
+                        translated_text = None
+                else:
+                    st.warning("Input text is empty. Please check your document.")
 
-            # Display translated text
-            if translated_text:
-                st.subheader(f"Translated text ({target_language}):")
-                st.write(translated_text)
-            else:
-                st.warning("Translation result is empty. Please check your input text.")
+                # Display translated text
+                if translated_text:
+                    st.subheader(f"Translated text ({target_language}):")
+                    st.write(translated_text)
+                else:
+                    st.warning("Translation result is empty. Please check your input text.")
 
-            # Button to convert to audio and get download links
-            if st.button("Convert to Audio and Get Download Links") and translated_text:
                 # Get the target language code from language_mapping
                 target_language_code = [code for code, lang in language_mapping.items() if lang == target_language][0]
 
@@ -232,4 +231,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
