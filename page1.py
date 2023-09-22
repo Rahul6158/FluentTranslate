@@ -130,7 +130,7 @@ def count_words(text):
 
 # Main Streamlit app
 def main():
-    st.image("jangirii.png", width=50)
+    st.image("jangirii.png", width=300)
     st.title("Text Translation and Conversion to Speech (English - other languages)")
 
     # Add a file uploader for DOCX, PDF, images
@@ -167,7 +167,7 @@ def main():
         if text is not None:
             st.subheader("Text Extracted from Uploaded File:")
             # Make the extracted text editable
-            edited_text = st.text_area("Edit the extracted text:", text)
+            edited_text = st.text_area("Edit the extracted text:", text, height = 400)
             
             # Count words in the edited text
             word_count = count_words(edited_text)
