@@ -129,22 +129,6 @@ def count_words(text):
     words = text.split()
     return len(words)
 
-import streamlit as st
-from PIL import Image
-import os
-from translation_functions import (
-    process_docx_text_without_lists,
-    process_pdf_text_without_lists,
-    extract_text_from_uploaded_image,
-    count_words,
-    translate_text_with_fallback,
-    translate_text_with_google,
-    convert_text_to_speech,
-    convert_text_to_word_doc,
-    get_binary_file_downloader_html,
-    language_mapping,
-)
-
 # Main Streamlit app
 def main():
     st.image("jangirii.png", width=300)
