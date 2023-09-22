@@ -21,5 +21,3 @@ elif page_choice == "Text Translation":
     page2.main()
 elif page_choice == "Text Summarization":
     page3.main()  # Call the main function for Page 3
-elif page_choice == "Page 3":
-    st.write("This is Page 3. You can add content and functionality specific to this page here.")
