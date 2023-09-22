@@ -68,7 +68,18 @@ from googletrans import Translator as GoogleTranslator
 def translate_text_with_google(text, target_language):
     try:
         google_translator = GoogleTranslator()
-        translated_text = google_translator.translate(text, dest=target_language).text
+
+        max_chunk_length = 500
+        translated_text = ""
+        total_chunks = len(text) // max_chunk_length + 1
+
+        for i in range(total_chunks):
+            start = i * max_chunk_length
+            end = (i + 1) * max_chunk_length
+            chunk = text[start:end]
+            translated_chunk = google_translator.translate(chunk, dest=target_language).text
+            translated_text += translated_chunk
+
         return translated_text
     except Exception as e:
         print(f"Translation error: {str(e)}")
