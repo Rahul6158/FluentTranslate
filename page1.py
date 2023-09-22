@@ -63,28 +63,6 @@ def process_pdf_text_without_lists(pdf_file):
         st.error(f"Error processing PDF: {str(e)}")
     return pdf_text
 
-from googletrans import Translator as GoogleTranslator
-
-def translate_text_with_google(text, target_language):
-    try:
-        google_translator = GoogleTranslator()
-
-        max_chunk_length = 500
-        translated_text = ""
-        total_chunks = len(text) // max_chunk_length + 1
-
-        for i in range(total_chunks):
-            start = i * max_chunk_length
-            end = (i + 1) * max_chunk_length
-            chunk = text[start:end]
-            translated_chunk = google_translator.translate(chunk, dest=target_language).text
-            translated_text += translated_chunk
-
-        return translated_text
-    except Exception as e:
-        print(f"Translation error: {str(e)}")
-        return None
-
 # Function to convert text to speech and save as an MP3 file
 def convert_text_to_speech(text, output_file, language='en'):
     if text:
@@ -98,6 +76,20 @@ def convert_text_to_speech(text, output_file, language='en'):
             tts.save(output_file)
         except Exception as e:
             st.error(f"Error with gTTS: {str(e)}")
+
+# Function to translate text using Google Translate
+def translate_text_with_google(text, target_language):
+    google_translator = GoogleTranslator()
+
+    max_chunk_length = 500
+    translated_text = ""
+
+    for i in range(0, len(text), max_chunk_length):
+        chunk = text[i:i + max_chunk_length]
+        translated_chunk = google_translator.translate(chunk, dest=target_language).text
+        translated_text += translated_chunk
+
+    return translated_text
 
 # Function to generate a download link for a file
 def get_binary_file_downloader_html(link_text, file_path, file_format):
