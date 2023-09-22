@@ -13,6 +13,7 @@ import easyocr
 import PyPDF2
 from PIL import Image
 
+
 language_mapping = {
     "en": "English",
     "gu": "Gujarati",
