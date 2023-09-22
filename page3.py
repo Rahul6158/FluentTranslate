@@ -47,7 +47,7 @@ def build_similarity_matrix(sentences, words):
 
     return similarity_matrix
 
-def generate_summary(text, num_sentences=3):
+def generate_summary(text, num_sentences=6):
     sentences, words = read_text(text)
     global word_frequencies
     word_frequencies = [word for sentence in words for word in sentence]
