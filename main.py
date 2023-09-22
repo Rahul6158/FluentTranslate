@@ -1,9 +1,9 @@
 import streamlit as st
 import page1
 import page2
-import page3  # Import the new page3 module
+import page3 
 
-# Define a custom sidebar method
+st.write("Features")
 def custom_sidebar():
     st.sidebar.title("Available Options")  # Add a sidebar title
 
