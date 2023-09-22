@@ -121,7 +121,7 @@ def main():
 
     # Show word count as soon as the text is entered
     word_count = count_words(text)
-    st.write(f"Word Count: {word_count} words")
+    st.subheader(f"Word Count: {word_count} words")
 
     target_language = st.selectbox("Select target language:", list(language_mapping.values()))
 
