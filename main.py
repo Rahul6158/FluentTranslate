@@ -29,7 +29,7 @@ def custom_sidebar():
     """, unsafe_allow_html=True)
 
     # Create radio button group
-    page_choice = st.sidebar.radio("", ["Document and Pdf Translation", "Text Translation"])
+    page_choice = st.sidebar.radio("", ["Document and Pdf Translation", "Text Translation", "Text Summarization"])
 
     return page_choice
 
@@ -39,4 +39,6 @@ page_choice = custom_sidebar()
 if page_choice == "Document and Pdf Translation":
     page1.main()  # Call the main function for Page 1
 elif page_choice == "Text Translation":
+    page2.main()  # Call the main function for Page 2
+elif page_choice == "Text Summarization":
     page2.main()  # Call the main function for Page 2
