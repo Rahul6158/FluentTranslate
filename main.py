@@ -42,5 +42,5 @@ if page_choice == "Document and Pdf Translation":
 if page_choice == "Text Translation":
     page2.main() 
 if page_choice == "Text Summarization":
-    page3.main()
+    page4.main()
 
