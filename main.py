@@ -3,8 +3,9 @@ import page1
 import page2
 import page3 
 
-st.write("Features")
+
 def custom_sidebar():
+    st.write("Features")
     st.sidebar.title("Available Options")  # Add a sidebar title
 
     # Create radio button group
