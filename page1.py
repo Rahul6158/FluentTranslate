@@ -94,7 +94,6 @@ def translate_text_with_google(text, target_language):
 
     return translated_text
 
-
 # Function to convert text to speech and save as an MP3 file
 def convert_text_to_speech(text, output_file, language='en'):
     if text:
@@ -103,11 +102,8 @@ def convert_text_to_speech(text, output_file, language='en'):
             st.warning(f"Unsupported language: {language}")
             return
 
-        try:
-            tts = gTTS(text=text, lang=language)
-            tts.save(output_file)
-        except Exception as e:
-            st.error(f"Error converting text to speech: {str(e)}")
+        tts = gTTS(text=text, lang=language)
+        tts.save(output_file)
 
 # Function to generate a download link for a file
 def get_binary_file_downloader_html(link_text, file_path, file_format):
@@ -148,7 +144,6 @@ def count_words(text):
     words = text.split()
     return len(words)
 
-# Main Streamlit app
 def main():
     st.image("jangirii.png", width=50)
     st.title("Text Translation and Conversion to Speech (English - other languages)")
@@ -188,14 +183,14 @@ def main():
             st.subheader("Text Extracted from Uploaded File:")
             
             # Display the text in a text area for editing
-            edited_text = st.text_area("Edit the extracted text", value=text)
-            
+            edited_text = st.text_area("Edit the extracted text", value=text, height=400)
+    
             # Count words in the edited text
             word_count = count_words(edited_text)
             st.subheader(f"Word Count: {word_count} words")
 
             # Check if word count exceeds 5000
-            if word_count > 15000:
+            if word_count > 40000:
                 st.warning("Warning: The document contains more than 5000 words, which may be too large for translation.")
                 return  # Exit the function if word count exceeds 5000
 
