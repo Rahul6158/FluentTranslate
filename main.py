@@ -10,8 +10,12 @@ def custom_sidebar():
     # Create radio button group
     page_choice = st.sidebar.radio("", ["Document and Pdf Translation", "Text Translation", "Text Summarization"])
 
-    st.sidebar.header("Research and Proposal : ")
-    st.sidebar.header("Sushmitha Devi Pindi")
+names = ["Sai Annapurna","Kalyan Ram Chegondi","Vinay Bhaskar Bonam","Karthik Vasa","Tusha Rahul Bellamkonda","Pindi Sushmitha Devi"]
+st.sidebar.title("Developed By :")
+for name in names:
+    st.sidebar.write(name)
+st.sidebar.title("Under The Guidance of :")
+st.sidebar.write("Dr.Bomma.Ramakrishna")
 
     return page_choice
 
