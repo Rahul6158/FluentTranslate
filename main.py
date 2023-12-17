@@ -1,22 +1,20 @@
 import streamlit as st
 import page1
 import page2
-import page3 
-
+import page3
 
 def custom_sidebar():
-    st.sidebar.title("Features")  
+    st.sidebar.title("Features")
     st.sidebar.header("Available Options")  # Add a sidebar title
     # Create radio button group
     page_choice = st.sidebar.radio("", ["Document and Pdf Translation", "Text Translation", "Text Summarization"])
 
-    names = ["Sai Annapurna","Kalyan Ram Chegondi","Vinay Bhaskar Bonam","Karthik Vasa","Tusha Rahul Bellamkonda","Pindi Sushmitha Devi"]
+    names = ["Sai Annapurna", "Kalyan Ram Chegondi", "Vinay Bhaskar Bonam", "Karthik Vasa", "Tusha Rahul Bellamkonda", "Pindi Sushmitha Devi"]
     st.sidebar.title("Developed By :")
     for name in names:
         st.sidebar.write(name)
     st.sidebar.title("Under The Guidance of :")
-    st.sidebar.write("Dr.Bomma.Ramakrishna")
-
+    st.sidebar.write("Dr. Bomma Ramakrishna")
     return page_choice
 
 # Use the custom sidebar method
