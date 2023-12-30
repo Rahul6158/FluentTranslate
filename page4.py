@@ -89,6 +89,53 @@ def display_method_info():
             st.text(f"{key}: {value}")
         st.text("\n")
 
+def display_libraries_info():
+    st.header("Libraries Information")
+    
+    # Dictionary containing library information (name, usage, description)
+    library_info = {
+        "Streamlit": {
+            "Usage": "Building interactive web apps in Python.",
+            "Description": "Simplifies the creation of web applications by allowing developers to build UI components using simple Python scripting."
+        },
+        "os": {
+            "Usage": "Interacting with the operating system for file and directory operations.",
+            "Description": "Provides a portable way of using operating system-dependent functionality."
+        },
+        "base64": {
+            "Usage": "Encoding binary data to ASCII characters and decoding back.",
+            "Description": "Converts binary data into a text-based format and back, useful for storing or transmitting data."
+        },
+        "docx2txt": {
+            "Usage": "Extracting text from DOCX (Microsoft Word) files.",
+            "Description": "A library designed to parse and extract text from DOCX files without requiring Microsoft Word to be installed."
+        },
+        "googletrans": {
+            "Usage": "Utilizing Google Translate API for text translation.",
+            "Description": "A Python wrapper around Google Translate's API, enabling translation between various languages."
+        },
+        "gtts (gTTS)": {
+            "Usage": "Converts text to speech and saves it as an MP3 file.",
+            "Description": "An interface to Google's Text-to-Speech API, allowing the conversion of text into natural-sounding speech."
+        },
+        "io": {
+            "Usage": "Handles file-like objects for I/O operations.",
+            "Description": "Provides core tools for working with different types of I/O streams and handles data streams in memory and disk files."
+        },
+        "docx (python-docx)": {
+            "Usage": "Creates and modifies Word (.docx) files.",
+            "Description": "Allows the creation and manipulation of Microsoft Word files (.docx) using Python."
+        },
+        # Add more libraries and their information here
+    }
+
+    for library_name, details in library_info.items():
+        st.subheader(library_name)
+        for key, value in details.items():
+            st.text(f"{key}: {value}")
+        st.text("\n")
+
+
 def main():
     # Split the page into two columns
     st.title("About the Application")
@@ -188,6 +235,8 @@ multilingual, and vibrant app—your go-to for seamless translation and speech c
     # Add content to the right column
     with right_column:
         display_method_info()
+        display_libraries_info()
+
 
 if __name__ == "__main__":
     main()
