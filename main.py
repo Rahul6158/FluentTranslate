@@ -64,11 +64,11 @@ def custom_sidebar():
     '''
     st.sidebar.markdown(project_description, unsafe_allow_html=True)
     names = ["Sai Annapurna", "Kalyan Ram Chegondi", "Vinay Bhaskar Bonam", "Karthik Vasa", "Tusha Rahul Bellamkonda", "Pindi Sushmitha Devi"]
-        st.sidebar.title("Developed By :")
-        for name in names:
-            st.sidebar.write(name)
-        st.sidebar.title("Under The Guidance of :")
-        st.sidebar.write("Dr. Bomma Ramakrishna")
+    st.sidebar.title("Developed By :")
+    for name in names:
+        st.sidebar.write(name)
+    st.sidebar.title("Under The Guidance of :")
+    st.sidebar.write("Dr. Bomma Ramakrishna")
     # Display the daily quote and author in the sidebar
     display_quote()
 
