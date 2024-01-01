@@ -234,12 +234,13 @@ multilingual, and vibrant app—your go-to for seamless translation and speech c
     # Add content to the left column
     with left_column:
         display_method_code(method_names)
+        display_libraries_info()
         # Add your content for the left side here
 
     # Add content to the right column
     with right_column:
         display_method_info()
-        display_libraries_info()
+
 
 
 if __name__ == "__main__":
