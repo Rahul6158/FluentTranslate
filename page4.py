@@ -137,7 +137,40 @@ def display_libraries_info():
             st.text(f"Usage: {details['Usage']}\nDescription: {details['Description']}")
 
 
+def display_advantages_and_disadvantages():
+    st.header("Comparision of fluentranslate and google translate ")
 
+    # Dictionary containing advantages and disadvantages
+    advantages_disadvantages = {
+        "Fluentranslate": {
+            "Easy Local Access": "Fluentranslate provides local translation and text-to-speech synthesis, ensuring privacy and faster access to translation services.",
+            "Customization": "Offers customized features for document conversion, speech synthesis, and translation tailored to user preferences.",
+            "Document Editing": "Allows text editing before translation, enabling users to modify text for more accurate translations.",
+            "Offline Mode": "Supports offline translation, handy for situations where internet access is limited or unavailable.",
+            "Multiple File Formats": "Capable of handling various file formats for translation, including DOCX, PDF, and text files.",
+            "Integration Capabilities": "Provides integration options for embedding translation services into other applications or systems.",
+            "Speech Synthesis Quality": "Offers higher-quality speech synthesis output, enhancing the audio experience for users.",
+            "Community Support": "Benefits from an active user community that contributes to enhancing features and providing support.",
+            "Language Support": "Supports a wide array of languages for translation, catering to diverse linguistic needs."
+        },
+        "Google Translate": {
+            "Privacy Concerns": "As an online service, Google Translate may raise privacy concerns due to data transmission and storage.",
+            "Limited Customization": "Limited customization options for document conversion, speech synthesis, and translation functionalities.",
+            "Editing Restrictions": "Does not provide extensive text editing capabilities before translation, potentially leading to less accurate translations.",
+            "Offline Limitations": "Limited functionality when used offline; many features require an active internet connection.",
+            "File Compatibility": "May face challenges in handling certain file formats during translation or conversion processes.",
+            "Accuracy Variation": "Translation accuracy might vary depending on languages and context, leading to potential inaccuracies.",
+            "Voice Quality": "Voice synthesis quality may not always meet high standards, affecting the audio output.",
+            "Limited Community Support": "May lack an active user community or resources for troubleshooting and improvement suggestions.",
+            "Language Coverage": "Some languages might have limited support or less accurate translations compared to others."
+        },
+        # Add more advantages/disadvantages here
+    }
+
+    for item, details in advantages_disadvantages.items():
+        st.subheader(item)
+        for key, value in details.items():
+            st.text(f"{key}: {value}\n")
 
 
 def main():
@@ -240,6 +273,7 @@ multilingual, and vibrant app—your go-to for seamless translation and speech c
     # Add content to the right column
     with right_column:
         display_method_info()
+        display_advantages_and_disadvantages()
 
 
 
