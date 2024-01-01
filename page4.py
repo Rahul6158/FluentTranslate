@@ -139,6 +139,7 @@ def display_libraries_info():
 
 
 
+
 def main():
     # Split the page into two columns
     st.title("About the Application")
