@@ -91,7 +91,8 @@ def display_method_info():
         
 def display_libraries_info():
     st.header("Libraries Information")
-
+    
+    # Dictionary containing library information (name, usage, description)
     library_info = {
         "Streamlit": {
             "Usage": "Building interactive web apps in Python.",
@@ -128,13 +129,13 @@ def display_libraries_info():
         # Add more libraries and their information here
     }
 
-    # Create a table to display library information
-    st.write("| Library | Usage | Description |")
-    st.write("| ------- | ----- | ----------- |")
     for library_name, details in library_info.items():
-        usage = details["Usage"]
-        desc = details["Description"]
-        st.write(f"| {library_name} | {usage} | {desc} |")
+        col1, col2 = st.columns([1, 3])  # Adjust the column widths as needed
+        with col1:
+            st.text(library_name)
+        with col2:
+            st.text(f"Usage: {details['Usage']}\nDescription: {details['Description']}")
+
 
 
 
