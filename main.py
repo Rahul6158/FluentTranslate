@@ -64,7 +64,7 @@ def main():
     '''
     st.sidebar.markdown(project_description, unsafe_allow_html=True)
     
-    names = ["Sai Annapurna", "Kalyan Ram Chegondi", "Vinay Bhaskar Bonam", "Karthik Vasa", "Tusha Rahul Bellamkonda", "Pindi Sushmitha Devi"]
+    names = ["Pindi Sushmitha Devi","Tusha Rahul Bellamkonda","Karthik Vasa","Sai Annapurna","Kalyan Ram Chegondi", "Vinay Bhaskar Bonam"]
     st.sidebar.title("Developed By :")
     for name in names:
         st.sidebar.write(name)
