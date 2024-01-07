@@ -262,7 +262,6 @@ multilingual, and vibrant app—your go-to for seamless translation and speech c
     # Add content to the right column
     with right_column:
         display_method_info()
-        display_advantages_and_disadvantages()
 
 
 
