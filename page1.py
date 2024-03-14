@@ -4,10 +4,15 @@ import base64
 import docx2txt
 from googletrans import Translator as GoogleTranslator
 from gtts import gTTS
+import io
 from docx import Document
+from bs4 import BeautifulSoup
+from PIL import Image
 import pytesseract
+import easyocr
 import PyPDF2
 from PIL import Image
+
 
 language_mapping = {
     "en": "English",
@@ -113,6 +118,26 @@ def process_pdf_text_without_lists(pdf_file):
         st.error(f"Error processing PDF: {str(e)}")
     return pdf_text
 
+# Function to extract text from a TXT file
+def process_txt_file(txt_file):
+    txt_text = txt_file.read()
+    text = txt_text.decode('utf-8')
+    return text
+
+# Function to translate text using Google Translate
+def translate_text_with_google(text, target_language):
+    google_translator = GoogleTranslator()
+
+    max_chunk_length = 500
+    translated_text = ""
+
+    for i in range(0, len(text), max_chunk_length):
+        chunk = text[i:i + max_chunk_length]
+        translated_chunk = google_translator.translate(chunk, dest=target_language).text
+        translated_text += translated_chunk
+
+    return translated_text
+
 # Function to convert text to speech and save as an MP3 file
 def convert_text_to_speech(text, output_file, language='en'):
     if text:
@@ -183,7 +208,7 @@ def main():
         elif file_extension == "txt":
             # Display TXT content
             txt_text = uploaded_file.read()
-            text = txt_text.decode('utf-8')
+            text = txt_text
 
         if text is not None:
             st.subheader("Text Extracted from Uploaded File:")
@@ -195,9 +220,9 @@ def main():
             st.subheader(f"Word Count: {word_count} words")
 
             # Check if word count exceeds 5000
-            if word_count > 5000:
-                st.warning("Warning: The document contains more than 5000 words, which may be too large for translation.")
-                return  # Exit the function if word count exceeds 5000
+            if word_count > 50000:
+                st.warning("Warning: The document contains more than 50000 words, which may be too large for translation.")
+                return  # Exit the function if word count exceeds 50000
 
             st.subheader('Select Language to Translate:')
             target_language = st.selectbox("Select target language:", list(language_mapping.values()))
